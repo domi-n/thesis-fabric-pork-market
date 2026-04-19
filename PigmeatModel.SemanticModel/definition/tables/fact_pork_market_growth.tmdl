@@ -1,0 +1,115 @@
+table fact_pork_market_growth
+	lineageTag: 724142da-3b8f-442f-841a-7eb6a6aa536e
+	sourceLineageTag: [pigmeat].[fact_pork_market_growth]
+
+	column country_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 289cf48f-c5cf-4d92-ac0e-a2ac9aea445f
+		sourceLineageTag: country_id
+		summarizeBy: none
+		sourceColumn: country_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column gdp_forecast_growth_avg
+		dataType: double
+		lineageTag: 690fe298-a9a2-40d9-be23-a2727b51826e
+		sourceLineageTag: gdp_forecast_growth_avg
+		summarizeBy: sum
+		sourceColumn: gdp_forecast_growth_avg
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column n_years
+		dataType: int64
+		formatString: 0
+		lineageTag: d25c7535-be2f-4215-b65c-3d94b94e9816
+		sourceLineageTag: n_years
+		summarizeBy: sum
+		sourceColumn: n_years
+
+		annotation SummarizationSetBy = Automatic
+
+	column gdp_growth_forecast_normalized
+		dataType: double
+		lineageTag: c2a90237-bf02-4259-99f2-ebc56fb876bd
+		sourceLineageTag: gdp_growth_forecast_normalized
+		summarizeBy: sum
+		sourceColumn: gdp_growth_forecast_normalized
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column import_CAGR
+		dataType: double
+		lineageTag: 1997aaba-3978-41d1-a4e5-66bf6fecee0f
+		sourceLineageTag: import_CAGR
+		summarizeBy: sum
+		sourceColumn: import_CAGR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column first_year
+		dataType: int64
+		formatString: 0
+		lineageTag: da2cdf75-b945-46b1-bec0-b5220dfdfaaa
+		sourceLineageTag: first_year
+		summarizeBy: sum
+		sourceColumn: first_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 1045a806-e9ad-46e4-9267-12435b3ba4b3
+		sourceLineageTag: last_year
+		summarizeBy: sum
+		sourceColumn: last_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column max_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c11bb8b-1e38-4689-83c7-d2d522d77e7b
+		sourceLineageTag: max_year
+		summarizeBy: sum
+		sourceColumn: max_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_periods_non_null
+		dataType: int64
+		formatString: 0
+		lineageTag: fa9096ba-fe93-4859-a761-a4196590a321
+		sourceLineageTag: n_periods_non_null
+		summarizeBy: sum
+		sourceColumn: n_periods_non_null
+
+		annotation SummarizationSetBy = Automatic
+
+	column import_CAGR_normalized
+		dataType: double
+		lineageTag: 2d055ee8-3a7d-42fa-9ee1-78a102139655
+		sourceLineageTag: import_CAGR_normalized
+		summarizeBy: sum
+		sourceColumn: import_CAGR_normalized
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_pork_market_growth = entity
+		mode: directLake
+		source
+			entityName: fact_pork_market_growth
+			schemaName: pigmeat
+			expressionSource: 'DirectLake - GoldWarehouse'
+

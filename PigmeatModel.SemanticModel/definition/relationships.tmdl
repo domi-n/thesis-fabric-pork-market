@@ -1,0 +1,12 @@
+relationship 6ea2398e-f9ab-7b74-9903-4fd65905ead4
+	fromColumn: fact_pork_market.country_id
+	toColumn: dim_partner.country_id
+
+relationship d3b22c1a-a370-d111-c3b7-349560854a19
+	fromColumn: fact_pork_market_growth.country_id
+	toColumn: dim_partner.country_id
+
+relationship 377d9524-e8c8-5830-076f-9cb912d1e4f2
+	fromColumn: fact_trade_barriers.country_id
+	toColumn: dim_partner.country_id
+

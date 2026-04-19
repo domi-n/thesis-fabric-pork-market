@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "5469b4614d697b5b043f",
+  "position": {
+    "x": 21.851289833080425,
+    "y": 158.42185128983309,
+    "z": 11000,
+    "height": 113.62670713201821,
+    "width": 323.3990895295903,
+    "tabOrder": 2000
+  },
+  "visualGroup": {
+    "displayName": "Demand Slider",
+    "groupMode": "ScaleMode"
+  }
+}

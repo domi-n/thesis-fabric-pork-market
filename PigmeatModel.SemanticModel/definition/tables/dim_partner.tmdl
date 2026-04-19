@@ -1,0 +1,52 @@
+table dim_partner
+	lineageTag: 9398e6b2-ba8d-4cd0-9d7a-7f506dc71a99
+	sourceLineageTag: [pigmeat].[dim_partner]
+
+	column country_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f0dc4768-e894-4a2a-90f3-894813d477d5
+		sourceLineageTag: country_id
+		summarizeBy: none
+		sourceColumn: country_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column iso3
+		dataType: string
+		lineageTag: 008425c5-5c1a-4bd6-aa80-a859a37699b4
+		sourceLineageTag: iso3
+		summarizeBy: none
+		sourceColumn: iso3
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 87aab97e-4496-4462-aa8b-f191140dce2c
+		sourceLineageTag: name
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: name
+
+		changedProperty = DataCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column faostat_fallback
+		dataType: int64
+		formatString: 0
+		lineageTag: 582c4b51-1e27-4c8b-be00-002b83cbab0e
+		sourceLineageTag: faostat_fallback
+		summarizeBy: sum
+		sourceColumn: faostat_fallback
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_partner = entity
+		mode: directLake
+		source
+			entityName: dim_partner
+			schemaName: pigmeat
+			expressionSource: 'DirectLake - GoldWarehouse'
+

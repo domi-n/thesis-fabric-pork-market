@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Gold Layer Processing"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3a54ba76-051b-adc3-4379-86f2bd81b670"
+  }
+}

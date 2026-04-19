@@ -1,0 +1,27 @@
+table Weight1
+	lineageTag: ec7906b3-f2dc-4ca6-928b-5cc890351c25
+
+	measure 'Weight1 Value' = SELECTEDVALUE('Weight1'[Weight1])
+		formatString: 0.00
+		lineageTag: cb19403c-8e87-4329-a125-355ea44371de
+
+	column Weight1
+		lineageTag: 8fb4680d-8fa1-4da5-a409-bfb8bdaf3057
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Weight1 = calculated
+		mode: import
+		source = GENERATESERIES(0.00, 1.01, 0.01)
+
+	annotation PBI_Id = b56222c6d09e42c6a9ff2720692b62a1
+

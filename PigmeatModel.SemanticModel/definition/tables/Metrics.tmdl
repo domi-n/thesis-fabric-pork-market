@@ -1,0 +1,489 @@
+table Metrics
+	lineageTag: 9b1e4f71-ea36-483e-a314-8b6db4c61183
+
+	measure MinGap
+		lineageTag: 11f4930f-2077-485c-b636-5b3d5f3c4ed5
+
+		annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":null}
+
+		annotation 277cc1b9-af89-4597-8e15-cacc25c0886b = To use special characters in a measure name, enclose the entire name in brackets ( [] ) and add a ] to any closing brackets in the name.
+
+	measure MaxGap = ```
+			
+			
+			VAR AnalisedYear = 2022
+			
+			VAR X = SUM(fact_pork_market[consumption_tones]) - SUM(fact_pork_market[production_tonnes])
+			
+			
+			VAR XMax =
+			    CALCULATE(
+			        MAXX(
+			            ALL(fact_pork_market[country_id]),
+			            SUM(fact_pork_market[consumption_tones]) - SUM(fact_pork_market[production_tonnes])
+			        ),
+			        KEEPFILTERS(fact_pork_market[year] = AnalisedYear)      // filtr po roku
+			    )
+			    
+			
+			RETURN
+			    XMax
+			```
+		lineageTag: 7db42d89-53e8-4314-9560-c7947e6980e0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Gap = CALCULATE(SUM(fact_pork_market[consumption_tones]) - SUM(fact_pork_market[production_tonnes]), fact_pork_market[year] = 2022)
+		lineageTag: 0f88a0e7-e909-49f3-bd52-58d403245527
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MarketScore = 0.2 * MAX(fact_pork_market_growth[import_CAGR_normalized]) + 0.2 * MAX(fact_pork_market_growth[gdp_growth_forecast_normalized]) + 0.05 *MAX(fact_trade_barriers[tariff_avg_normalized]) + 0.05 * MAX(fact_trade_barriers[dist_normalized]) + 0.25 * [ImportGapNormalized] + 0.25 * [ImportSizeNormalized]
+		formatString: 0.0000
+		lineageTag: a5b1edd8-adf1-415d-8882-7a234ebdab1c
+
+	measure ImportSizeNormalized =
+			
+			VAR maxYear =
+			    CALCULATE(
+			        MAX(fact_pork_market[year]),
+			        FILTER(
+			            ALL(fact_pork_market),
+			            NOT(ISBLANK(fact_pork_market[import_tonnes])) &&
+			            NOT(ISBLANK(fact_pork_market[import_gap]))
+			        )
+			    )
+			
+			RETURN IF(
+			    MAX(dim_partner[faostat_fallback]) = 1,
+			    CALCULATE(MAX(fact_pork_market[import_size_normalized]), fact_pork_market[year] = maxYear - 1),
+			    CALCULATE(MAX(fact_pork_market[import_size_normalized]), fact_pork_market[year] = maxYear))
+		lineageTag: 3469d4d3-8696-455b-a17c-6ca248e8e164
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ImportGapNormalized =
+			
+			
+			VAR maxYear =
+			    CALCULATE(
+			        MAX(fact_pork_market[year]),
+			        FILTER(
+			            ALL(fact_pork_market),
+			            NOT(ISBLANK(fact_pork_market[import_tonnes])) &&
+			            NOT(ISBLANK(fact_pork_market[import_gap]))
+			        )
+			    )
+			
+			RETURN IF(
+			    MAX(dim_partner[faostat_fallback]) = 1,
+			    CALCULATE(MAX(fact_pork_market[import_gap_normalized]), fact_pork_market[year] = maxYear - 1),
+			    CALCULATE(MAX(fact_pork_market[import_gap_normalized]), fact_pork_market[year] = maxYear))
+		lineageTag: c1a6a685-de04-4769-b592-617f03ef4f07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '3.1 Growth Metric' = 'Weight3.1'[Weight3.1 Value] * MAX(fact_pork_market_growth[import_CAGR_normalized]) + (1 - 'Weight3.1'[Weight3.1 Value]) * MAX(fact_pork_market_growth[gdp_growth_forecast_normalized])
+		lineageTag: 4d10522f-57d6-4010-9dc6-88ca76f68023
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '3.2 Market metric' = 'Weight3.2'[Weight3.2 Value] * [ImportSizeNormalized] + (1 - 'Weight3.2'[Weight3.2 Value]) * [ImportGapNormalized]
+		lineageTag: a4c4f752-1d16-4c06-96d3-00861b29f78a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '2.1 Demand metric' = 'Weight2.1'[Weight2.1 Value] * [3.2 Market metric] + (1 - 'Weight2.1'[Weight2.1 Value]) * [3.1 Growth Metric]
+		lineageTag: 37ee28f2-53e8-4d69-9721-811a7ee6cca2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '2.2 Ease metric' = ```
+			
+			
+			VAR w_tariff = 'Weight2.2'[Weight2.2 Value]
+			VAR w_dist = 1 - 'Weight2.2'[Weight2.2 Value]
+			
+			VAR tariff = MAX(fact_trade_barriers[tariff_avg_normalized])
+			VAR dist = MAX(fact_trade_barriers[dist_normalized])
+			
+			RETURN 
+			 SWITCH(
+			    TRUE(),
+			    AND(NOT(ISBLANK(tariff)), NOT(ISBLANK(dist))), 1 - (w_tariff * tariff + w_dist * dist),
+			    AND(ISBLANK(tariff), ISBLANK(dist)), BLANK(),
+			    OR(ISBLANK(tariff), ISBLANK(dist)), 0.5 - (w_tariff * tariff + w_dist * dist),
+			    BLANK())
+			```
+		lineageTag: fd1bc494-c9f1-4dc8-9285-36d7c60a542e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '1. MarketScore' = ROUND([Weight1 Value] * [2.1 Demand metric] + (1 - [Weight1 Value]) * [2.2 Ease metric], 4)
+		lineageTag: 37b83112-c100-4b6a-a120-5924968b637e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Weights = ```
+			"ImportSize: " & [ImportSizeWeight] & " ImportGap: " & [ImportGapWeight] & " CAGR: " & Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value])  * 'Weight3.1'[Weight3.1 Value] 
+			& " GDP: " & Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value])  * ( 1 - 'Weight3.1'[Weight3.1 Value])
+			& " Tariff: " & ROUND((1 - Weight1[Weight1 Value]) * 'Weight2.2'[Weight2.2 Value], 4) 
+			& " Distance: " & ROUND((1 - Weight1[Weight1 Value]) * (1 - 'Weight2.2'[Weight2.2 Value]), 4)
+			```
+		lineageTag: 3ee5c707-fc58-4aeb-b2f2-62d290829c7c
+
+	measure ImportSizeWeight = Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * 'Weight3.2'[Weight3.2 Value]
+		lineageTag: eba579d9-ccc9-4589-9c6e-9cae6ac86103
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ImportGapWeight = Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * ( 1 - 'Weight3.2'[Weight3.2 Value])
+		lineageTag: b3f934c5-b1ec-40ff-a9d6-0002f425176e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure WeightsDemandEase = "Demand: " & Weight1[Weight1 Value] & " Ease: " & (1-Weight1[Weight1 Value])
+		lineageTag: 638ba2c6-b07b-44bb-882b-8b60874aede6
+
+	measure 'Ocena rynku' = ROUND(Weight1[Weight1 Value], 2) & " * Popyt + " & ROUND((1-Weight1[Weight1 Value]), 2) & " * Bariery handlowe"
+		displayFolder: Measure Explenation
+		lineageTag: 3f7cb39e-16a9-47ef-ab46-a9a30b77e524
+
+	measure Popyt = ```
+			ROUND('Weight2.1'[Weight2.1 Value], 2) & " * Handel + " & ROUND((1 - 'Weight2.1'[Weight2.1 Value]), 2) & " * Wzrost"
+			
+			```
+		displayFolder: Measure Explenation
+		lineageTag: 09a7a142-2d18-4f64-ba68-dd23befd4895
+
+	measure Handel = ROUND('Weight3.2'[Weight3.2 Value], 2) & " * Wielkość importu + " & ROUND((1 - 'Weight3.2'[Weight3.2 Value]), 2) & " * Luka importowa"
+		displayFolder: Measure Explenation
+		lineageTag: 0d6b1581-06a8-4c4a-9418-2138c6078866
+
+	measure Wzrost = ROUND('Weight3.1'[Weight3.1 Value], 2) & " * CAGR importu + " & ROUND((1 - 'Weight3.1'[Weight3.1 Value]), 2) & " * Prognoza PKB"
+		displayFolder: Measure Explenation
+		lineageTag: d4034007-0514-40a5-874a-1c44cb0358de
+
+	measure 'Bariery handlowe' = "1 - (" & ROUND('Weight2.2'[Weight2.2 Value], 2) & " * Wielkość importu + " & ROUND((1-'Weight2.2'[Weight2.2 Value]), 2) & " * Luka importowa)"
+		displayFolder: Measure Explenation
+		lineageTag: cc9293b8-252d-4a8c-b476-03b37427517b
+
+	measure 'Ocena rynku całość' = ```
+			
+			 
+			
+			 VAR waga_wlk_importu = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * 'Weight3.2'[Weight3.2 Value], 4)
+			 VAR waga_luka = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * (1 - 'Weight3.2'[Weight3.2 Value]), 4)
+			 VAR waga_CAGR = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * 'Weight3.1'[Weight3.1 Value], 4)
+			 VAR waga_PKB = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * (1 - 'Weight3.1'[Weight3.1 Value]), 4)
+			 VAR waga_clo = ROUND((1 - Weight1[Weight1 Value]) * 'Weight2.2'[Weight2.2 Value], 4)
+			 VAR waga_dyst = ROUND((1 - Weight1[Weight1 Value]) * (1 - 'Weight2.2'[Weight2.2 Value]), 4)
+			
+			 Var waga_bariery = ROUND((1 - Weight1[Weight1 Value]), 4)
+			
+			 RETURN (waga_wlk_importu & " * Wielkość importu + " & waga_luka & " * Luka importowa + " & waga_CAGR & " * CAGR importu + " & waga_PKB & " * Prognoza PKB + " & waga_bariery & " - ( " & waga_clo & " * Cło importowe + " & waga_dyst & " * Dystans)")
+			 
+			```
+		displayFolder: Measure Explenation
+		lineageTag: dcee773d-9c82-4de5-81df-56132ac5658c
+
+	measure 'Parameters value' =
+			
+			
+			VAR waga_wlk_importu = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * 'Weight3.2'[Weight3.2 Value], 4)
+			 VAR waga_luka = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * (1 - 'Weight3.2'[Weight3.2 Value]), 4)
+			 VAR waga_CAGR = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * 'Weight3.1'[Weight3.1 Value], 4)
+			 VAR waga_PKB = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * (1 - 'Weight3.1'[Weight3.1 Value]), 4)
+			 VAR waga_clo = ROUND((1 - Weight1[Weight1 Value]) * 'Weight2.2'[Weight2.2 Value], 4)
+			 VAR waga_dyst = ROUND((1 - Weight1[Weight1 Value]) * (1 - 'Weight2.2'[Weight2.2 Value]), 4)
+			
+			VAR P = SELECTEDVALUE('Parameters Hierarchy'[Parameter])
+			RETURN
+			    SWITCH(
+			        P,
+			        "Tariff", waga_clo,
+			        "Distance", waga_dyst,
+			        BLANK()
+			    )
+		lineageTag: 547ab938-3f35-44b9-8760-bb654650ae4d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Parameters value test' =
+			
+			
+			VAR demand_weight = ROUND(Weight1[Weight1 Value], 4)
+			VAR barriers_weight = ROUND((1 - Weight1[Weight1 Value]), 4)
+			
+			VAR trade_weight = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value], 4)
+			VAR growth_weight = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]), 4)
+			
+			
+			VAR waga_wlk_importu = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * 'Weight3.2'[Weight3.2 Value], 4)
+			VAR waga_luka = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * (1 - 'Weight3.2'[Weight3.2 Value]), 4)
+			VAR waga_CAGR = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * 'Weight3.1'[Weight3.1 Value], 4)
+			VAR waga_PKB = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * (1 - 'Weight3.1'[Weight3.1 Value]), 4)
+			VAR waga_clo = ROUND((1 - Weight1[Weight1 Value]) * 'Weight2.2'[Weight2.2 Value], 4)
+			VAR waga_dyst = ROUND((1 - Weight1[Weight1 Value]) * (1 - 'Weight2.2'[Weight2.2 Value]), 4)
+			
+			VAR P = SELECTEDVALUE('Parameters Hierarchy'[Parameter])
+			RETURN
+			  SWITCH(
+			    TRUE(),
+			
+			    /* 🔹 PARAMETER level */
+			    ISINSCOPE('Parameters Hierarchy'[Parameter]),
+			        SWITCH(
+			            SELECTEDVALUE('Parameters Hierarchy'[Parameter]),
+			            "Import size",waga_wlk_importu,
+			            "Import gap", waga_luka,
+			            "CAGR", waga_CAGR,
+			            "GDP forecast", waga_PKB,
+			            BLANK()
+			        ),
+			
+			    /* 🔹 GROUP lvl 2 */
+			    ISINSCOPE('Parameters Hierarchy'[Group lvl 2]),
+			        SWITCH(
+			            SELECTEDVALUE('Parameters Hierarchy'[Group lvl 2]),
+			            "Trade", trade_weight,
+			            "Growth", growth_weight,
+			            "Tariff", waga_clo,
+			            "Distance", waga_dyst,
+			            BLANK()
+			        ),
+			
+			    /* 🔹 GROUP lvl 1 */
+			    ISINSCOPE('Parameters Hierarchy'[Group lvl 1]),
+			        SWITCH(
+			            SELECTEDVALUE('Parameters Hierarchy'[Group lvl 1]),
+			            "Demand", demand_weight,
+			            "Barriers", barriers_weight,
+			            BLANK()
+			        )
+			)
+		lineageTag: fcdd6dc8-1348-4c05-b838-63624618090f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Demand Split' = Weight1[Weight1 Value]
+		displayFolder: Weights
+		lineageTag: de7f3d60-24a2-41b6-a9b0-6b558dcdb641
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Barriers Split' = ROUND(1 - Weight1[Weight1 Value], 2)
+		displayFolder: Weights
+		lineageTag: 38320fb3-a3d7-468c-9d65-7c82ddd7c029
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trade Split' = 'Weight2.1'[Weight2.1 Value]
+		displayFolder: Weights
+		lineageTag: 7668a031-04c9-4f46-ad27-1ef2fe2bada4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Split' = ROUND((1 - 'Weight2.1'[Weight2.1 Value]), 2)
+		displayFolder: Weights
+		lineageTag: 5c85a888-9f9e-4c91-9e57-439698fb8298
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Import Size Split' = 'Weight3.2'[Weight3.2 Value]
+		displayFolder: Weights
+		lineageTag: 3e230146-fd27-4eaf-b165-508fddabe874
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Import Gap Split' = ROUND((1 - 'Weight3.2'[Weight3.2 Value]), 2)
+		displayFolder: Weights
+		lineageTag: 0b052c46-45f6-4cc5-8b68-37fc91d5ad9a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CAGR Split' = 'Weight3.1'[Weight3.1 Value]
+		displayFolder: Weights
+		lineageTag: c1b87f17-7ddf-4bde-bddb-38278572f756
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'GDP Split' = ROUND((1 - 'Weight3.1'[Weight3.1 Value]), 2)
+		displayFolder: Weights
+		lineageTag: 6d96a23b-b006-40ed-9bec-f84bf4dafb24
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tariff Split' = 'Weight2.2'[Weight2.2 Value]
+		displayFolder: Weights
+		lineageTag: 689389d7-910d-48a8-bf8b-d064e85878f7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Distance Split' = ROUND((1 - 'Weight2.2'[Weight2.2 Value]), 2)
+		displayFolder: Weights
+		lineageTag: 595ccaa4-d29d-48a3-879a-3a3ac4b7dbac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Indicator weight' =
+			
+			
+			VAR waga_wlk_importu = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * 'Weight3.2'[Weight3.2 Value], 4)
+			VAR waga_luka = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * (1 - 'Weight3.2'[Weight3.2 Value]), 4)
+			VAR waga_CAGR = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * 'Weight3.1'[Weight3.1 Value], 4)
+			VAR waga_PKB = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * (1 - 'Weight3.1'[Weight3.1 Value]), 4)
+			VAR waga_clo = ROUND((1 - Weight1[Weight1 Value]) * 'Weight2.2'[Weight2.2 Value], 4)
+			VAR waga_dyst = ROUND((1 - Weight1[Weight1 Value]) * (1 - 'Weight2.2'[Weight2.2 Value]), 4)
+			
+			RETURN
+			        SWITCH(
+			            SELECTEDVALUE(Indicators[Indicator]),
+			            "Import size",waga_wlk_importu,
+			            "Import gap", waga_luka,
+			            "CAGR", waga_CAGR,
+			            "GDP forecast", waga_PKB,
+			            "Tariff", waga_clo,
+			            "Distance", waga_dyst,
+			            BLANK()
+			        )
+		displayFolder: Indicator measures
+		lineageTag: 888c85b7-fd8f-467f-8f27-5b597288ebb7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Indicator value normalized' =
+			
+			
+			VAR import_size = [ImportSizeNormalized]
+			VAR import_gap = [ImportGapNormalized]
+			VAR CAGR = SUM(fact_pork_market_growth[import_CAGR_normalized])
+			VAR GDP_forecast = SUM(fact_pork_market_growth[gdp_growth_forecast_normalized])
+			VAR tariff = IF(ISBLANK(SUM(fact_trade_barriers[tariff_avg_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[tariff_avg_normalized]))
+			VAR distance = IF(ISBLANK(SUM(fact_trade_barriers[dist_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[dist_normalized]))
+			
+			RETURN
+			        SWITCH(
+			            SELECTEDVALUE(Indicators[Indicator]),
+			            "Import size", import_size,
+			            "Import gap", import_gap,
+			            "CAGR", CAGR,
+			            "GDP forecast", GDP_forecast,
+			            "Tariff", tariff,
+			            "Distance", distance,
+			            BLANK()
+			        )
+		displayFolder: Indicator measures
+		lineageTag: 62c5d231-a684-49ce-aec9-30034c6009f0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Indicator weight * value' =
+			
+			
+			VAR import_size = [ImportSizeNormalized]
+			VAR import_gap = [ImportGapNormalized]
+			VAR CAGR = SUM(fact_pork_market_growth[import_CAGR_normalized])
+			VAR GDP_forecast = SUM(fact_pork_market_growth[gdp_growth_forecast_normalized])
+			VAR tariff = IF(ISBLANK(SUM(fact_trade_barriers[tariff_avg_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[tariff_avg_normalized]))
+			VAR distance = IF(ISBLANK(SUM(fact_trade_barriers[dist_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[dist_normalized]))
+			
+			VAR w_import_size = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * 'Weight3.2'[Weight3.2 Value], 4)
+			VAR w_import_gap = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * (1 - 'Weight3.2'[Weight3.2 Value]), 4)
+			VAR w_CAGR = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * 'Weight3.1'[Weight3.1 Value], 4)
+			VAR w_GDP_forecast = ROUND(Weight1[Weight1 Value] * (1 - 'Weight2.1'[Weight2.1 Value]) * (1 - 'Weight3.1'[Weight3.1 Value]), 4)
+			VAR w_tariff = ROUND((1 - Weight1[Weight1 Value]) * 'Weight2.2'[Weight2.2 Value], 4)
+			VAR w_dist = ROUND((1 - Weight1[Weight1 Value]) * (1 - 'Weight2.2'[Weight2.2 Value]), 4)
+			
+			
+			RETURN
+			        SWITCH(
+			            SELECTEDVALUE(Indicators[Indicator]),
+			            "Import size", w_import_size * import_size,
+			            "Import gap", w_import_gap * import_gap,
+			            "CAGR", w_CAGR * CAGR,
+			            "GDP forecast", w_GDP_forecast * GDP_forecast,
+			            "Tariff", w_tariff * tariff,
+			            "Distance", w_dist * distance,
+			            BLANK()
+			        )
+		displayFolder: Indicator measures
+		lineageTag: 6f427842-8f2c-4e8c-ac3f-d1fb5cc6600e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ImportGap =
+			
+			
+			VAR maxYear =
+			    CALCULATE(
+			        MAX(fact_pork_market[year]),
+			        FILTER(
+			            ALL(fact_pork_market),
+			            NOT(ISBLANK(fact_pork_market[import_tonnes])) &&
+			            NOT(ISBLANK(fact_pork_market[import_gap]))
+			        )
+			    )
+			RETURN IF(
+			    MAX(dim_partner[faostat_fallback]) = 1,
+			    CALCULATE(MAX(fact_pork_market[import_gap]), fact_pork_market[year] = maxYear - 1),
+			    CALCULATE(MAX(fact_pork_market[import_gap]), fact_pork_market[year] = maxYear))
+		lineageTag: 96a6448a-bd8b-4085-9767-c7e0ae9c8aca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ImportSize =
+			
+			VAR maxYear =
+			    CALCULATE(
+			        MAX(fact_pork_market[year]),
+			        FILTER(
+			            ALL(fact_pork_market),
+			            NOT(ISBLANK(fact_pork_market[import_tonnes])) &&
+			            NOT(ISBLANK(fact_pork_market[import_gap]))
+			        )
+			    )
+			
+			RETURN IF(
+			    MAX(dim_partner[faostat_fallback]) = 1,
+			    CALCULATE(MAX(fact_pork_market[import_tonnes]), fact_pork_market[year] = maxYear - 1),
+			    CALCULATE(MAX(fact_pork_market[import_tonnes]), fact_pork_market[year] = maxYear))
+		lineageTag: 95132868-eeb2-42c0-ac02-6fc1c03bf4c3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Indicator value' =
+			
+			
+			VAR import_size = [ImportSize]
+			VAR import_gap = [ImportGap]
+			VAR CAGR = ROUND(SUM(fact_pork_market_growth[import_CAGR]),2)
+			VAR GDP_forecast = ROUND(SUM(fact_pork_market_growth[gdp_forecast_growth_avg]),2)
+			VAR tariff = ROUND(SUM(fact_trade_barriers[tariff_avg]), 2)
+			VAR distance = SUM(fact_trade_barriers[dist])
+			
+			RETURN
+			        SWITCH(
+			            SELECTEDVALUE(Indicators[Indicator]),
+			            "Import size", import_size & " tonnes",
+			            "Import gap", import_gap & " tonnes",
+			            "CAGR", CAGR * 100 & "%",
+			            "GDP forecast", GDP_forecast & "%",
+			            "Tariff", tariff * 100 & "%",
+			            "Distance", distance & " km",
+			            BLANK()
+			        )
+		displayFolder: Indicator measures
+		lineageTag: 3ff291b9-819a-4c94-817a-ce252e7c9c29
+
+	partition Metrics = m
+		mode: import
+		source =
+				let
+				  Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				  #"Removed columns" = Table.RemoveColumns(Source, {"Column1"})
+				in
+				  #"Removed columns"
+
+	annotation PBI_ResultType = Table
+

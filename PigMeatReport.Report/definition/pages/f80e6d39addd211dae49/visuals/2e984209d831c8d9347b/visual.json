@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "2e984209d831c8d9347b",
+  "position": {
+    "x": 22.039735099337747,
+    "y": 18.649006622516556,
+    "z": 12000,
+    "height": 113.58940397350993,
+    "width": 322.11920529801324,
+    "tabOrder": 4000
+  },
+  "visualGroup": {
+    "displayName": "Market Score Slider",
+    "groupMode": "ScaleMode"
+  }
+}

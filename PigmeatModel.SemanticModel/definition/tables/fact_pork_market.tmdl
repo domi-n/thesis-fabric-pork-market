@@ -1,0 +1,96 @@
+table fact_pork_market
+	lineageTag: 407ad949-67fd-437c-95e2-e23de8e33dac
+	sourceLineageTag: [pigmeat].[fact_pork_market]
+
+	column country_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 98fa0e15-a180-4638-bcdf-013792fdbf4b
+		sourceLineageTag: country_id
+		summarizeBy: none
+		sourceColumn: country_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 9231c820-118f-410c-87e2-6e84009c39fc
+		sourceLineageTag: year
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column consumption_tones
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f3c15d1-08c7-45c3-8b03-3b53c7bf3155
+		sourceLineageTag: consumption_tones
+		summarizeBy: sum
+		sourceColumn: consumption_tones
+
+		annotation SummarizationSetBy = Automatic
+
+	column production_tonnes
+		dataType: double
+		lineageTag: c53dfd41-fab6-481c-9f68-68772dfe4e7c
+		sourceLineageTag: production_tonnes
+		summarizeBy: sum
+		sourceColumn: production_tonnes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column import_tonnes
+		dataType: double
+		lineageTag: 3903713b-ab0f-45c1-bcbf-0b4a23f27478
+		sourceLineageTag: import_tonnes
+		summarizeBy: sum
+		sourceColumn: import_tonnes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column import_gap
+		dataType: double
+		lineageTag: 03ab1d4a-74a0-4a0f-9271-449a5b5104d3
+		sourceLineageTag: import_gap
+		summarizeBy: sum
+		sourceColumn: import_gap
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column import_gap_normalized
+		dataType: double
+		lineageTag: d7d2b51f-e821-4e21-aedc-d445b6171d3b
+		sourceLineageTag: import_gap_normalized
+		summarizeBy: sum
+		sourceColumn: import_gap_normalized
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column import_size_normalized
+		dataType: double
+		lineageTag: 182941ca-ca28-4a9e-ac54-ab3fae42387b
+		sourceLineageTag: import_size_normalized
+		summarizeBy: sum
+		sourceColumn: import_size_normalized
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_pork_market = entity
+		mode: directLake
+		source
+			entityName: fact_pork_market
+			schemaName: pigmeat
+			expressionSource: 'DirectLake - GoldWarehouse'
+

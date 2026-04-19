@@ -1,0 +1,28 @@
+table 'Weight3.2'
+	lineageTag: bd3fb753-b697-446d-b632-9d3010109042
+
+	measure 'Weight3.2 Value' = SELECTEDVALUE('Weight3.2'[Weight3.2])
+		lineageTag: e243a0ae-84df-4036-b5a6-0eb5106df299
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Weight3.2'
+		lineageTag: 3ab24131-707c-425f-9340-5bd474140f83
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Weight3.2' = calculated
+		mode: import
+		source = GENERATESERIES(0, 1.01, 0.01)
+
+	annotation PBI_Id = 66774cbbf2cf47f0b5b382d7b2fdf7ca
+

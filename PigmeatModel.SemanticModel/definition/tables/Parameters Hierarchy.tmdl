@@ -1,0 +1,74 @@
+table 'Parameters Hierarchy'
+	lineageTag: f2681393-7c85-4dc0-a6af-967b6b4e7440
+
+	column 'Group lvl 1'
+		dataType: string
+		lineageTag: e1687979-8890-4a5f-883c-3823cb73fa22
+		summarizeBy: none
+		sourceColumn: Group lvl 1
+		sortByColumn: 'Lvl 1 order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Group lvl 2'
+		dataType: string
+		lineageTag: 9bab91ed-b17f-409e-a3b4-6b68bcdc3213
+		summarizeBy: none
+		sourceColumn: Group lvl 2
+		sortByColumn: 'Lvl 2 order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parameter
+		dataType: string
+		lineageTag: 96564be1-2728-4b9f-8bed-c5f894c92165
+		summarizeBy: none
+		sourceColumn: Parameter
+		sortByColumn: 'Lvl 3 order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Lvl 1 order'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0b1f55b5-9f6a-431f-b1bc-14c3342ab73d
+		summarizeBy: none
+		sourceColumn: Lvl 1 order
+
+		annotation SummarizationSetBy = User
+
+	column 'Lvl 2 order'
+		dataType: int64
+		formatString: 0
+		lineageTag: e16d176d-580a-4e24-9090-03fcf5b58961
+		summarizeBy: none
+		sourceColumn: Lvl 2 order
+
+		annotation SummarizationSetBy = User
+
+	column 'Lvl 3 order'
+		dataType: int64
+		formatString: 0
+		lineageTag: f2c96351-4df2-4797-a7fa-26029923b35e
+		summarizeBy: none
+		sourceColumn: Lvl 3 order
+
+		annotation SummarizationSetBy = User
+
+	partition 'Parameters Hierarchy' = m
+		mode: import
+		source =
+				let
+				  Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WcknNTcxLUdJRCilKTEkF0p65BflFJQrFmVUgniEcx+rgVpyeWICk1ghVrXtRfnlJBpDh7OgeBFeio2SMQ5m7S4BCWn5RanJicQmSchOwcqfEoqLM1KJikBsSizLT0oAMuHlAJpoal8ziksS85FSEKhOwqlgA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Group lvl 1" = _t, #"Group lvl 2" = _t, Parameter = _t, #"Lvl 1 order" = _t, #"Lvl 2 order" = _t, #"Lvl 3 order" = _t]),
+				  #"Changed column type" = Table.TransformColumnTypes(Source, {{"Lvl 1 order", Int64.Type}, {"Lvl 2 order", Int64.Type}, {"Lvl 3 order", Int64.Type}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

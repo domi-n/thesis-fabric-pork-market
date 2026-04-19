@@ -1,0 +1,68 @@
+table fact_trade_barriers
+	lineageTag: 2a08f769-5b6f-499d-b970-05a744074f9b
+	sourceLineageTag: [pigmeat].[fact_trade_barriers]
+
+	column country_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 05ae51a0-e4d0-4bf5-b322-4b02577a4d15
+		sourceLineageTag: country_id
+		summarizeBy: none
+		sourceColumn: country_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tariff_avg
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: de41c784-970b-4d7b-986d-fe8cbb3c8555
+		sourceLineageTag: tariff_avg
+		summarizeBy: none
+		sourceColumn: tariff_avg
+
+		changedProperty = SummarizeBy
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = User
+
+	column tariff_avg_normalized
+		dataType: double
+		lineageTag: 14500e74-e9eb-4a4e-abad-e8f35164877e
+		sourceLineageTag: tariff_avg_normalized
+		summarizeBy: sum
+		sourceColumn: tariff_avg_normalized
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dist
+		dataType: double
+		lineageTag: 13bcc784-7b0a-4757-aa21-0b7bc6756a10
+		sourceLineageTag: dist
+		summarizeBy: sum
+		sourceColumn: dist
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dist_normalized
+		dataType: double
+		lineageTag: c8938542-0283-48b3-b690-1fb2b8018ef1
+		sourceLineageTag: dist_normalized
+		summarizeBy: sum
+		sourceColumn: dist_normalized
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_trade_barriers = entity
+		mode: directLake
+		source
+			entityName: fact_trade_barriers
+			schemaName: pigmeat
+			expressionSource: 'DirectLake - GoldWarehouse'
+

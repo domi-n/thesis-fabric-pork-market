@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["DirectLake - GoldWarehouse","Metrics","Parameters Hierarchy","Indicators"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit"]
+
+ref table dim_partner
+ref table Metrics
+ref table fact_pork_market
+ref table fact_trade_barriers
+ref table fact_pork_market_growth
+ref table Weight1
+ref table 'Weight2.1'
+ref table 'Weight2.2'
+ref table 'Weight3.1'
+ref table 'Weight3.2'
+ref table 'Parameters Hierarchy'
+ref table Indicators
+

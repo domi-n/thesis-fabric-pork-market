@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "505e6fef2eaf14a9e26e",
+  "position": {
+    "x": 25.128983308042489,
+    "y": 577.9666160849772,
+    "z": 8000,
+    "height": 113.62670713201821,
+    "width": 323.3990895295903,
+    "tabOrder": 1000
+  },
+  "visualGroup": {
+    "displayName": "Barriers Slider",
+    "groupMode": "ScaleMode"
+  }
+}
