@@ -1,0 +1,118 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "41b67b14-d14a-9765-42e0-5b0f6670dc91",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "ingestion_date": {
+              "value": {
+                "value": "@formatDateTime(utcNow(), 'yyyy-MM-dd')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Bronze Notebook",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "31eb3ecf-b984-a3a2-4bfb-a8a7133207a5",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "ingestion_date": {
+              "value": {
+                "value": "@formatDateTime(utcNow(), 'yyyy-MM-dd')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Silver Notebook",
+        "dependsOn": [
+          {
+            "activity": "Bronze Data Validation",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "e7fe9274-5332-b82a-4ca6-8344832bc954",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "ingestion_date": {
+              "value": {
+                "value": "@formatDateTime(utcNow(), 'yyyy-MM-dd')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Bronze Data Validation",
+        "dependsOn": [
+          {
+            "activity": "Bronze Notebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "3a54ba76-051b-adc3-4379-86f2bd81b670",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Gold Notebook",
+        "dependsOn": [
+          {
+            "activity": "Silver Notebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

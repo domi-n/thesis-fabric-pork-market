@@ -1,0 +1,1653 @@
+{
+  "name": "{{Dataset_Name}}",
+  "compatibilityLevel": 1604,
+  "model": {
+    "name": "{{Dataset_Name}}",
+    "culture": "en-US",
+    "collation": "Latin1_General_100_BIN2_UTF8",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "dim_calendar",
+        "sourceLineageTag": "[pigmeat].[dim_calendar]",
+        "columns": [
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "bigint",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "dim_calendar",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "dim_partner",
+        "sourceLineageTag": "[pigmeat].[dim_partner]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "iso3",
+            "dataType": "string",
+            "sourceColumn": "iso3",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "iso3",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "name",
+            "dataType": "string",
+            "sourceColumn": "name",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "name",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "faostat_fallback",
+            "dataType": "int64",
+            "sourceColumn": "faostat_fallback",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "faostat_fallback",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "dim_partner",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "dim_ue_country",
+        "sourceLineageTag": "[pigmeat].[dim_ue_country]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "iso3",
+            "dataType": "string",
+            "sourceColumn": "iso3",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "iso3",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "name",
+            "dataType": "string",
+            "sourceColumn": "name",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "name",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "dim_ue_country",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_consumption",
+        "sourceLineageTag": "[pigmeat].[fact_consumption]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "consumption_tones",
+            "dataType": "int64",
+            "sourceColumn": "consumption_tones",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "consumption_tones",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_consumption",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_distance",
+        "sourceLineageTag": "[pigmeat].[fact_distance]",
+        "columns": [
+          {
+            "name": "country_id_o",
+            "dataType": "int64",
+            "sourceColumn": "country_id_o",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id_o",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "country_id_d",
+            "dataType": "int64",
+            "sourceColumn": "country_id_d",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id_d",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "dist",
+            "dataType": "double",
+            "sourceColumn": "dist",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "dist",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_distance",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_gdp_growth_forecast",
+        "sourceLineageTag": "[pigmeat].[fact_gdp_growth_forecast]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "gdp_change_forecast",
+            "dataType": "double",
+            "sourceColumn": "gdp_change_forecast",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "gdp_change_forecast",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_gdp_growth_forecast",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_import",
+        "sourceLineageTag": "[pigmeat].[fact_import]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "import_tonnes",
+            "dataType": "double",
+            "sourceColumn": "import_tonnes",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "import_tonnes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_import",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_pork_market",
+        "sourceLineageTag": "[pigmeat].[fact_pork_market]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "production_tonnes",
+            "dataType": "double",
+            "sourceColumn": "production_tonnes",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "production_tonnes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "import_tonnes",
+            "dataType": "double",
+            "sourceColumn": "import_tonnes",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "import_tonnes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "consumption_tones",
+            "dataType": "int64",
+            "sourceColumn": "consumption_tones",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "consumption_tones",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "import_gap",
+            "dataType": "double",
+            "sourceColumn": "import_gap",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "import_gap",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "import_gap_normalized",
+            "dataType": "double",
+            "sourceColumn": "import_gap_normalized",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "import_gap_normalized",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "import_size_normalized",
+            "dataType": "double",
+            "sourceColumn": "import_size_normalized",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "import_size_normalized",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_pork_market",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_pork_market_growth",
+        "sourceLineageTag": "[pigmeat].[fact_pork_market_growth]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "gdp_forecast_growth_avg",
+            "dataType": "double",
+            "sourceColumn": "gdp_forecast_growth_avg",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "gdp_forecast_growth_avg",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "n_years",
+            "dataType": "int64",
+            "sourceColumn": "n_years",
+            "formatString": "0",
+            "sourceProviderType": "bigint",
+            "sourceLineageTag": "n_years",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "gdp_growth_forecast_normalized",
+            "dataType": "double",
+            "sourceColumn": "gdp_growth_forecast_normalized",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "gdp_growth_forecast_normalized",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "import_CAGR",
+            "dataType": "double",
+            "sourceColumn": "import_CAGR",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "import_CAGR",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "first_year",
+            "dataType": "int64",
+            "sourceColumn": "first_year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "first_year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "last_year",
+            "dataType": "int64",
+            "sourceColumn": "last_year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "last_year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "max_year",
+            "dataType": "int64",
+            "sourceColumn": "max_year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "max_year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "n_periods_non_null",
+            "dataType": "int64",
+            "sourceColumn": "n_periods_non_null",
+            "formatString": "0",
+            "sourceProviderType": "bigint",
+            "sourceLineageTag": "n_periods_non_null",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "import_CAGR_normalized",
+            "dataType": "double",
+            "sourceColumn": "import_CAGR_normalized",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "import_CAGR_normalized",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_pork_market_growth",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_production(1)",
+        "sourceLineageTag": "[pigmeat].[fact_production]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "production_tonnes",
+            "dataType": "double",
+            "sourceColumn": "production_tonnes",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "production_tonnes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_production",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_tariff",
+        "sourceLineageTag": "[pigmeat].[fact_tariff]",
+        "columns": [
+          {
+            "name": "reporting_country_id",
+            "dataType": "int64",
+            "sourceColumn": "reporting_country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "reporting_country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "partner_country_id",
+            "dataType": "int64",
+            "sourceColumn": "partner_country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "partner_country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "tariff_average",
+            "dataType": "double",
+            "sourceColumn": "tariff_average",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "tariff_average",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_tariff",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_trade_barriers",
+        "sourceLineageTag": "[pigmeat].[fact_trade_barriers]",
+        "columns": [
+          {
+            "name": "country_id",
+            "dataType": "int64",
+            "sourceColumn": "country_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "country_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "tariff_avg",
+            "dataType": "double",
+            "sourceColumn": "tariff_avg",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "tariff_avg",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "tariff_avg_normalized",
+            "dataType": "double",
+            "sourceColumn": "tariff_avg_normalized",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "tariff_avg_normalized",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "dist",
+            "dataType": "double",
+            "sourceColumn": "dist",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "dist",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "dist_normalized",
+            "dataType": "double",
+            "sourceColumn": "dist_normalized",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "dist_normalized",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_trade_barriers",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "pigmeat"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "bridge_member_date",
+        "sourceLineageTag": "[porkdata].[bridge_member_date]",
+        "columns": [
+          {
+            "name": "bridge_key",
+            "dataType": "string",
+            "sourceColumn": "bridge_key",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "bridge_key",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "member_state",
+            "dataType": "string",
+            "sourceColumn": "member_state",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "member_state",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year_month",
+            "dataType": "string",
+            "sourceColumn": "year_month",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "year_month",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "bridge_member_date",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "porkdata"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "dim_date",
+        "sourceLineageTag": "[porkdata].[dim_date]",
+        "columns": [
+          {
+            "name": "year_month",
+            "dataType": "string",
+            "sourceColumn": "year_month",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "year_month",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month_number",
+            "dataType": "int64",
+            "sourceColumn": "month_number",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "month_number",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month_name",
+            "dataType": "string",
+            "sourceColumn": "month_name",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "month_name",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month_short_name",
+            "dataType": "string",
+            "sourceColumn": "month_short_name",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "month_short_name",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year_month_int",
+            "dataType": "int64",
+            "sourceColumn": "year_month_int",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year_month_int",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "dim_date",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "porkdata"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_prices",
+        "sourceLineageTag": "[porkdata].[fact_prices]",
+        "columns": [
+          {
+            "name": "pig_class",
+            "dataType": "string",
+            "sourceColumn": "pig_class",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "pig_class",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "price",
+            "dataType": "double",
+            "sourceColumn": "price",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "price",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "unit",
+            "dataType": "string",
+            "sourceColumn": "unit",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "unit",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "week_number",
+            "dataType": "int64",
+            "sourceColumn": "week_number",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "week_number",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "prices_key",
+            "dataType": "string",
+            "sourceColumn": "prices_key",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "prices_key",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_prices",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "porkdata"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_production",
+        "sourceLineageTag": "[porkdata].[fact_production]",
+        "columns": [
+          {
+            "name": "heads",
+            "dataType": "double",
+            "sourceColumn": "heads",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "heads",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "kg_per_head",
+            "dataType": "double",
+            "sourceColumn": "kg_per_head",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "kg_per_head",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "tonnes",
+            "dataType": "double",
+            "sourceColumn": "tonnes",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "tonnes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "prod_key",
+            "dataType": "string",
+            "sourceColumn": "prod_key",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "prod_key",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "country_group",
+            "dataType": "string",
+            "sourceColumn": "country_group",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "country_group",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_production",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "porkdata"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "fact_trade",
+        "sourceLineageTag": "[porkdata].[fact_trade]",
+        "columns": [
+          {
+            "name": "partner",
+            "dataType": "string",
+            "sourceColumn": "partner",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "partner",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "flow",
+            "dataType": "string",
+            "sourceColumn": "flow",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "flow",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "product_group",
+            "dataType": "string",
+            "sourceColumn": "product_group",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "product_group",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "product_weight_in_tonnes",
+            "dataType": "double",
+            "sourceColumn": "product_weight_in_tonnes",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "product_weight_in_tonnes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "carcase_weight_in_tonnes",
+            "dataType": "double",
+            "sourceColumn": "carcase_weight_in_tonnes",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "carcase_weight_in_tonnes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "value_in_thousand_euro",
+            "dataType": "double",
+            "sourceColumn": "value_in_thousand_euro",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "value_in_thousand_euro",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "trade_key",
+            "dataType": "string",
+            "sourceColumn": "trade_key",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "trade_key",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "last_month",
+            "dataType": "int64",
+            "sourceColumn": "last_month",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "last_month",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "fact_trade",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "porkdata"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      }
+    ],
+    "expressions": [
+      {
+        "name": "DatabaseQuery",
+        "kind": "m",
+        "expression": "let\n    database = {{TDS_Endpoint}}\nin\n    database\n"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "SourceLineageTagType",
+        "value": "DatabaseFullyQualifiedName"
+      }
+    ]
+  }
+}

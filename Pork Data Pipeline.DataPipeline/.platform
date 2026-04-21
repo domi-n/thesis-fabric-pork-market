@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "Pork Data Pipeline"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a281f7a2-6cfc-8f14-49da-c1a5aefe7b5d"
+  }
+}
