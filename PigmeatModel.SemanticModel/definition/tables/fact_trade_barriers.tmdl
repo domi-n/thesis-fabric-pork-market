@@ -12,7 +12,7 @@ table fact_trade_barriers
 
 		annotation SummarizationSetBy = Automatic
 
-	column tariff_avg
+	column tariff
 		dataType: double
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: de41c784-970b-4d7b-986d-fe8cbb3c8555
@@ -24,16 +24,22 @@ table fact_trade_barriers
 
 		changedProperty = FormatString
 
+		changedProperty = Name
+
 		annotation SummarizationSetBy = User
 
-	column tariff_avg_normalized
+	column tariff_normalized
 		dataType: double
 		lineageTag: 14500e74-e9eb-4a4e-abad-e8f35164877e
 		sourceLineageTag: tariff_avg_normalized
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: tariff_avg_normalized
 
-		annotation SummarizationSetBy = Automatic
+		changedProperty = SummarizeBy
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
@@ -41,10 +47,12 @@ table fact_trade_barriers
 		dataType: double
 		lineageTag: 13bcc784-7b0a-4757-aa21-0b7bc6756a10
 		sourceLineageTag: dist
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: dist
 
-		annotation SummarizationSetBy = Automatic
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
@@ -52,10 +60,12 @@ table fact_trade_barriers
 		dataType: double
 		lineageTag: c8938542-0283-48b3-b690-1fb2b8018ef1
 		sourceLineageTag: dist_normalized
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: dist_normalized
 
-		annotation SummarizationSetBy = Automatic
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

@@ -38,10 +38,12 @@ table dim_partner
 		formatString: 0
 		lineageTag: 582c4b51-1e27-4c8b-be00-002b83cbab0e
 		sourceLineageTag: faostat_fallback
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: faostat_fallback
 
-		annotation SummarizationSetBy = Automatic
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
 
 	partition dim_partner = entity
 		mode: directLake

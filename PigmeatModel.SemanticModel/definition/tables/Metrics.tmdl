@@ -38,7 +38,7 @@ table Metrics
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure MarketScore = 0.2 * MAX(fact_pork_market_growth[import_CAGR_normalized]) + 0.2 * MAX(fact_pork_market_growth[gdp_growth_forecast_normalized]) + 0.05 *MAX(fact_trade_barriers[tariff_avg_normalized]) + 0.05 * MAX(fact_trade_barriers[dist_normalized]) + 0.25 * [ImportGapNormalized] + 0.25 * [ImportSizeNormalized]
+	measure MarketScore = 0.2 * MAX(fact_pork_market_growth[import_CAGR_normalized]) + 0.2 * MAX(fact_pork_market_growth[gdp_growth_forecast_normalized]) + 0.05 *MAX(fact_trade_barriers[tariff_normalized]) + 0.05 * MAX(fact_trade_barriers[dist_normalized]) + 0.25 * [ImportGapNormalized] + 0.25 * [ImportSizeNormalized]
 		formatString: 0.0000
 		lineageTag: a5b1edd8-adf1-415d-8882-7a234ebdab1c
 
@@ -104,7 +104,7 @@ table Metrics
 			VAR w_tariff = 'Weight2.2'[Weight2.2 Value]
 			VAR w_dist = 1 - 'Weight2.2'[Weight2.2 Value]
 			
-			VAR tariff = MAX(fact_trade_barriers[tariff_avg_normalized])
+			VAR tariff = MAX(fact_trade_barriers[tariff_normalized])
 			VAR dist = MAX(fact_trade_barriers[dist_normalized])
 			
 			RETURN 
@@ -359,7 +359,7 @@ table Metrics
 			VAR import_gap = [ImportGapNormalized]
 			VAR CAGR = SUM(fact_pork_market_growth[import_CAGR_normalized])
 			VAR GDP_forecast = SUM(fact_pork_market_growth[gdp_growth_forecast_normalized])
-			VAR tariff = IF(ISBLANK(SUM(fact_trade_barriers[tariff_avg_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[tariff_avg_normalized]))
+			VAR tariff = IF(ISBLANK(SUM(fact_trade_barriers[tariff_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[tariff_normalized]))
 			VAR distance = IF(ISBLANK(SUM(fact_trade_barriers[dist_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[dist_normalized]))
 			
 			RETURN
@@ -385,7 +385,7 @@ table Metrics
 			VAR import_gap = [ImportGapNormalized]
 			VAR CAGR = SUM(fact_pork_market_growth[import_CAGR_normalized])
 			VAR GDP_forecast = SUM(fact_pork_market_growth[gdp_growth_forecast_normalized])
-			VAR tariff = IF(ISBLANK(SUM(fact_trade_barriers[tariff_avg_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[tariff_avg_normalized]))
+			VAR tariff = IF(ISBLANK(SUM(fact_trade_barriers[tariff_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[tariff_normalized]))
 			VAR distance = IF(ISBLANK(SUM(fact_trade_barriers[dist_normalized])), BLANK(), 1 - SUM(fact_trade_barriers[dist_normalized]))
 			
 			VAR w_import_size = ROUND(Weight1[Weight1 Value] * 'Weight2.1'[Weight2.1 Value] * 'Weight3.2'[Weight3.2 Value], 4)
@@ -458,8 +458,8 @@ table Metrics
 			VAR import_size = [ImportSize]
 			VAR import_gap = [ImportGap]
 			VAR CAGR = ROUND(SUM(fact_pork_market_growth[import_CAGR]),2)
-			VAR GDP_forecast = ROUND(SUM(fact_pork_market_growth[gdp_forecast_growth_avg]),2)
-			VAR tariff = ROUND(SUM(fact_trade_barriers[tariff_avg]), 2)
+			VAR GDP_forecast = ROUND(SUM(fact_pork_market_growth[gdp_forecast_growth]),2)
+			VAR tariff = ROUND(SUM(fact_trade_barriers[tariff]), 2)
 			VAR distance = SUM(fact_trade_barriers[dist])
 			
 			RETURN
