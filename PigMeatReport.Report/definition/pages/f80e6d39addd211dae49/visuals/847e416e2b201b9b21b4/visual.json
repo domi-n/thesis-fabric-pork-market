@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "847e416e2b201b9b21b4",
   "position": {
-    "x": 552.41379310344826,
-    "y": 75.258620689655174,
+    "x": 552.05357142857144,
+    "y": 75.535714285714278,
     "z": 2000,
-    "height": 276.20689655172413,
-    "width": 727.75862068965512,
+    "height": 275.625,
+    "width": 721.60714285714289,
     "tabOrder": 6000
   },
   "visual": {
@@ -315,5 +315,65 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7c726a223c0aa2323162",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Metrics"
+              }
+            },
+            "Property": "Parameters value test"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9636dbf62cece7a924be",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Parameters Hierarchy"
+              }
+            },
+            "Property": "Group lvl 1"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0fdca24e98bb6901b41b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Parameters Hierarchy"
+              }
+            },
+            "Property": "Group lvl 2"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "735b6ae3ad079a69d916",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Parameters Hierarchy"
+              }
+            },
+            "Property": "Parameter"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

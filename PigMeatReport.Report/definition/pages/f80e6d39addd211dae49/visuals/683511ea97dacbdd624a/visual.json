@@ -202,5 +202,23 @@
     },
     "drillFilterOtherVisuals": true
   },
-  "parentGroupName": "7f5439353ef5ae9d7a42"
+  "parentGroupName": "7f5439353ef5ae9d7a42",
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "48ed5ebf6a927008b017",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Weight3.1"
+              }
+            },
+            "Property": "Weight3.1"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
 }
